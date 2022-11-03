@@ -1,8 +1,13 @@
 package UF5ProvesLambdas;
 
+import java.security.spec.RSAOtherPrimeInfo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class ExerciciL {
 
@@ -103,26 +108,47 @@ public class ExerciciL {
                 44 anys -> 1
                 15 anys -> 1
          */
-        mapPersones.putIfAbsent()
+
+        llista_persones.forEach(p -> {
+            mapPersones.computeIfPresent(p.getAge(), (k, v) -> v+1);
+            mapPersones.putIfAbsent(p.getAge(), 1);
+        });
 
         // 8 - llistat de persones DONA amb lambda (stream)
+        llista_persones.stream()
+                .filter(p -> p.getGenere().equals(Persona.Genere.DONA))
+                .forEach(System.out::println);
+        System.out.println();
 
         // 9 - Llistat dels dos HOMES més joves (stream)
+        llista_persones.stream()
+                .filter(p -> p.getGenere().equals(Persona.Genere.HOME))
+                .sorted(Comparator.comparingInt(Persona::getAge))
+                .limit(2)
+                .forEach(System.out::println);
+        System.out.println();
+
 
         // 10- Esborrar (no filtrar o imprimir) del llistat les persones entre 30 i 40 anys (amb lambda)
+        System.out.println("10 Esborrar");
+        llista_persones.removeIf(p -> p.getAge() > 30 && p.getAge() < 40);
+        llista_persones.forEach(System.out::println);
+        System.out.println();
 
         // 11 - Persones que tinguin una 'a' al seu nom
         System.out.println("\n11 Amb una 'A'");
+        llista_persones.stream()
+                .filter(p -> p.getNom().toLowerCase().contains("a"))
+                .forEach(System.out::println);
+        System.out.println();
 
         //12 - Llistat de les dates de naixament + dos dies
         System.out.println("\n12 - dates amb dos dies més");
-
+        llista_persones.forEach(p -> System.out.println(p.getDataNaixament().plusDays(2)));
 
         //13 - Rejovenir dos anys a totes les persones
         System.out.println("\n13 - Rejovenir dos anys a totes les persones");
-
-
+        llista_persones.forEach(p -> p.getDataNaixament().minusYears(2));
+        llista_persones.forEach(System.out::println);
     }
-
-
 }
