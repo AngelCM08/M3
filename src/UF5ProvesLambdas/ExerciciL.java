@@ -7,6 +7,7 @@ import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ExerciciL {
@@ -148,7 +149,12 @@ public class ExerciciL {
 
         //13 - Rejovenir dos anys a totes les persones
         System.out.println("\n13 - Rejovenir dos anys a totes les persones");
-        llista_persones.forEach(p -> p.getDataNaixament().minusYears(2));
-        llista_persones.forEach(System.out::println);
+        System.out.println("Abans:");
+        llista_persones.forEach(p -> System.out.println(p.getNom()+"\t"+p.getDataNaixament()));
+        System.out.println("\nDesprés:");
+        List<LocalDate> llista_dates = llista_persones.stream()
+                .map(persona -> persona.getDataNaixament().plusYears(2))
+                .toList();
+        llista_dates.forEach(d -> System.out.println("\t"+d));
     }
 }
