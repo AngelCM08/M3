@@ -150,11 +150,9 @@ public class ExerciciL {
         //13 - Rejovenir dos anys a totes les persones
         System.out.println("\n13 - Rejovenir dos anys a totes les persones");
         System.out.println("Abans:");
-        llista_persones.forEach(p -> System.out.println(p.getNom()+"\t"+p.getDataNaixament()));
+        llista_persones.forEach(System.out::println);
         System.out.println("\nDesprés:");
-        List<LocalDate> llista_dates = llista_persones.stream()
-                .map(persona -> persona.getDataNaixament().plusYears(2))
-                .toList();
-        llista_dates.forEach(d -> System.out.println("\t"+d));
+        llista_persones.forEach(p -> p.setDataNaixament(p.getDataNaixament().plusYears(2)));
+        llista_persones.forEach(System.out::println);
     }
 }
